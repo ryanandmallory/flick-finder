@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <title>Welcome to Flick Finder</title>
 </head>
-<body>
+<body class="body-container">
     <!-- INTRO PAGE -->
     <div class="container intro-page image-intro active">
         <div class="overlay"></div>
@@ -122,7 +122,7 @@
                 <button class="question-btn question-three-btn">Fantasy</button>
                 <button class="question-btn question-three-btn">Film Noir</button>
                 <button class="question-btn question-three-btn">Horror</button>
-                <button class="question-btn question-three-btn">Musical</button>
+                <button class="question-btn question-three-btn">Kids</button>
                 <button class="question-btn question-three-btn">Music</button>
                 <button class="question-btn question-three-btn">Mystery</button>
                 <button class="question-btn question-three-btn">News</button>
@@ -137,7 +137,7 @@
                 <button class="question-btn question-three-btn">Western</button>
             </div>
             <div class="question-three-confirmed">
-                <p>Look's good to me &mdash; let's proceed</p><button class="question-three-proceed-btn"></button>
+                <p>Look's good to me &mdash; let's proceed.</p><button class="question-three-proceed-btn"></button>
             </div>
         </div>
     </div>
@@ -164,11 +164,146 @@
             <div class="question-wrapper question-one">
                 <p>How much time do you have to watch?</span></p>
             </div>
-            <div class="buttons">
-                <input type="range" id="vol" name="vol" min="0" max="50">
+            <div class="slider">
+                <input type="range" id="sliderVal" name="vol" min="30" max="150" step="15" oninput="this.nextElementSibling.value = this.value + ' minutes'">
+                <output class="slider-output">90 minutes</output>
+            </div>
+            <div class="question-four-confirmed">
+                <p>Yep the time looks good &mdash; let's keep movin'</p><button class="question-four-proceed-btn"></button>
             </div>
         </div>
     </div>
+    <!-- QUESTION FIVE -->
+    <div class="container question-five-page image-five">
+        <div class="overlay"></div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-line"></div>
+                    <p class="disc disc-active">1</p>
+                    <p class="disc disc-active">2</p>
+                    <p class="disc disc-active">3</p>
+                    <p class="disc disc-active">4</p>
+                    <p class="disc disc-active">5</p>
+                    <p class="disc">6</p>
+                    <p class="disc">7</p>
+                </div>
+            </div>
+            <div class="question-wrapper question-one">
+                <p>Are you looking for a popular or <span class="nowrap">sleeper film?</span></p>
+            </div>
+            <div class="buttons">
+                <button class="question-btn question-five-btn">Popular</button>
+                <button class="question-btn question-five-btn">Sleeper</button>
+            </div>
+        </div>
+    </div>
+     <!-- QUESTION SIX -->
+     <div class="container question-six-page image-six">
+        <div class="overlay"></div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-line"></div>
+                    <p class="disc disc-active">1</p>
+                    <p class="disc disc-active">2</p>
+                    <p class="disc disc-active">3</p>
+                    <p class="disc disc-active">4</p>
+                    <p class="disc disc-active">5</p>
+                    <p class="disc disc-active">6</p>
+                    <p class="disc">7</p>
+                </div>
+            </div>
+            <div class="question-wrapper question-one question-six">
+                <p>Who's watching?</p>
+            </div>
+            <div class="buttons buttons-alt">
+                <button class="question-btn question-six-btn">Kids</button>
+                <button class="question-btn question-six-btn">Teenagers</button>
+                <button class="question-btn question-six-btn">Adults</button>
+                <button class="question-btn question-six-btn">Don&lsquo;t Care</button>
+            </div>
+        </div>
+    </div>
+     <!-- QUESTION SEVEN -->
+     <div class="container question-seven-page image-seven">
+        <div class="overlay"></div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-line"></div>
+                    <p class="disc disc-active">1</p>
+                    <p class="disc disc-active">2</p>
+                    <p class="disc disc-active">3</p>
+                    <p class="disc disc-active">4</p>
+                    <p class="disc disc-active">5</p>
+                    <p class="disc disc-active">6</p>
+                    <p class="disc disc-active">7</p> 
+                </div>
+            </div>
+            <div class="question-wrapper question-wrapper-alt question-one">
+                <p>Do you prefer a box office hit or highly-rated, <br class="no-break" />critically  <span class="nowrap">acclaimed film?</span></p>
+            </div>
+            <div class="buttons buttons-alt-two">
+                <button class="question-btn question-seven-btn">Box office Hit</button>
+                <button class="question-btn question-seven-btn">Critically Acclaimed</button>
+            </div>
+        </div>
+    </div>
+    <!-- SEARCH -->
+    <div class="container search-results search-results-image">
+        <div class="overlay"></div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+            </div>
+            <div class="search-spinner"></div>
+            <div class="question-wrapper search-wrapper-txt question-one">
+                <p>Thank you :) &mdash; Search in progress</p>
+                <div class="green-line-alt"></div>
+            </div>
+        </div>
+    </div>
+    <!-- DISPLAY EPISODES -->
+    <div class="container display-episode-page">
+        <div class="navigation">
+            <div class="nav-search">
+                <img src="img/magnifier.svg" alt="Search">
+            </div>
+            <div class="nav-close">
+                <img src="img/x-mark.svg" alt="Close">
+            </div>
+        </div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper progress-bar-wrapper-alt">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+                <div class="display-results-head">
+                    <h2>Your personal selections</h2>
+                </div>
+            </div>
+            <div class="movies-container scrollbar"></div>
+        </div>
+    </div>
+    <!-- DISPLAY EPISODE -->
+    <div class="container display-episode-results"></div>
     <script src="js/main.js"></script>
 </body>
 </html>
