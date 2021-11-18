@@ -477,6 +477,7 @@ input[type=range]:focus::-ms-fill-upper {
   position: absolute;
   height: 113px;
   max-width: 100%;
+  z-index: 5000;
 }
 .nav-search, .nav-close {
   width: 150px;
@@ -684,6 +685,55 @@ input[type=range]:focus::-ms-fill-upper {
   display: block;
   font-weight: bold;
   font-size: 2rem;
+}
+/* CONFIRMATION PAGE */
+.start-over-confirmation-page {
+  background-color: rgba(0, 0, 0, 0.85);
+  position: absolute;
+  z-index: 50000;
+}
+.start-over-confirmation-page h3 {
+  color: var(--white);
+  font-size: 3.25rem;
+  margin-bottom: 2.5rem;
+}
+.start-over-confirmation-page button {
+  width: 160px;
+  height: 50px;
+  margin: 10px;
+  font-size: 1.25rem;
+  padding: 10px;
+  transition: 00.7s;
+}
+.start-over-confirmation-page button:hover {
+  opacity: 0.65;
+  color: var(--black);
+}
+/* SEARCH PAGE */
+.image-search {
+  background: url("../img/search.jpg") center center no-repeat;
+  background-size: cover;
+}
+.search-input-wrapper {
+  position: absolute;
+  top: 58%;
+  width: 60%;
+}
+.search-input-wrapper input {
+  width: 100%;
+  height: 30px;
+  padding: 15px;
+  font-size: 1.15rem;
+  font-family: "Lato", sans-serif;
+  opacity: 0.85;
+  border-radius: 10px;
+}
+.image-search .buttons-alt-search {
+  top: 77%;
+}
+.image-search .buttons-alt-search button {
+  width: 400px;
+  padding: 15px 0;
 }
 @media only screen and (max-width: 1366px) {
   .container {

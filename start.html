@@ -126,7 +126,7 @@
                 <button class="question-btn question-three-btn">Music</button>
                 <button class="question-btn question-three-btn">Mystery</button>
                 <button class="question-btn question-three-btn">News</button>
-                <button class="question-btn question-three-btn">Reality TV</button>
+                <button class="question-btn question-three-btn">Reality</button>
                 <button class="question-btn question-three-btn">Romance</button>
                 <button class="question-btn question-three-btn">Sci-Fi</button>
                 <button class="question-btn question-three-btn">Short</button>
@@ -282,11 +282,11 @@
     <!-- DISPLAY EPISODES -->
     <div class="container display-episode-page">
         <div class="navigation">
-            <div class="nav-search">
-                <img src="img/magnifier.svg" alt="Search">
+            <div class="nav-search nav-search-btn">
+                <img class="nav-search-btn" src="img/magnifier.svg" alt="Search">
             </div>
-            <div class="nav-close">
-                <img src="img/x-mark.svg" alt="Close">
+            <div class="nav-close nav-close-btn">
+                <img class="nav-close-btn" src="img/x-mark.svg" alt="Close">
             </div>
         </div>
         <div class="wrapper questions">
@@ -304,6 +304,47 @@
     </div>
     <!-- DISPLAY EPISODE -->
     <div class="container display-episode-results"></div>
+    <!-- WANT TO START OVER -->
+    <div class="container start-over-confirmation-page">
+        <div class="wrapper">
+            <h3>Want to start over?</h3>
+            <div class="btn-wrapper">
+                <button class="confirmation-btn">Yes</button>
+                <button class="confirmation-btn">No</button>
+            </div>
+        </div>
+    </div>
+    <!-- WANT TO SEARCH BY TITLE -->
+    <div class="container start-over-confirmation-page search-confirmation-page">
+        <div class="wrapper">
+            <h3>So, you want to search by title?</h3>
+            <div class="btn-wrapper">
+                <button class="search-btn">Yes</button>
+                <button class="search-btn">No</button>
+            </div>
+        </div>
+    </div>
+    <!-- SEACH FOR SERIS OR MOVIE -->
+    <div class="container question-seven-page image-search search-page">
+        <div class="overlay"></div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+            </div>
+            <div class="question-wrapper question-wrapper-alt question-one">
+                <p>Type in your title and press enter</p>
+            </div>
+            <div class="search-input-wrapper">
+                <input id="episode-search-feld" type="text" placeholder="Please type in your series title &mdash; press enter">
+            </div>
+            <div class="buttons buttons-alt-search">
+                <button class="question-btn take-me-back">Nevermind, Take Me Back</button>
+            </div>
+        </div>
+    </div>
     <script src="js/main.js"></script>
 </body>
 </html>
