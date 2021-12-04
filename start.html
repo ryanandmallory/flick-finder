@@ -53,7 +53,7 @@
             <div class="buttons">
                 <button class="question-btn question-one-btn">Series</button>
                 <button class="question-btn question-one-btn">Movie</button>
-            </div>ion
+            </div>
         </div>
     </div>
     <!-- QUESTION TWO -->
@@ -106,21 +106,19 @@
                 </div>
             </div>
             <div class="question-wrapper question-three">
-                <p>Select the type of genre you're feeling?<br /><span style="font-size: 2rem;">(select all that apply)</span></p>
+                <p>Select the type of genre <span class="nowrap">you're feeling?</span><br /><span style="font-size: 2rem;">(select all that apply)</span></p>
             </div>
             <div class="buttons scrollbar">
                 <button class="question-btn question-three-btn">Action</button>
-                <button class="question-btn question-three-btn">Adult</button>
                 <button class="question-btn question-three-btn">Adventure</button>
                 <button class="question-btn question-three-btn">Animation</button>
-                <button class="question-btn question-three-btn">Biography</button>
                 <button class="question-btn question-three-btn">Comedy</button>
                 <button class="question-btn question-three-btn">Crime</button>
                 <button class="question-btn question-three-btn">Documentary</button>
                 <button class="question-btn question-three-btn">Drama</button>
                 <button class="question-btn question-three-btn">Family</button>
                 <button class="question-btn question-three-btn">Fantasy</button>
-                <button class="question-btn question-three-btn">Film Noir</button>
+                <button class="question-btn question-three-btn">History</button>
                 <button class="question-btn question-three-btn">Horror</button>
                 <button class="question-btn question-three-btn">Kids</button>
                 <button class="question-btn question-three-btn">Music</button>
@@ -129,9 +127,8 @@
                 <button class="question-btn question-three-btn">Reality</button>
                 <button class="question-btn question-three-btn">Romance</button>
                 <button class="question-btn question-three-btn">Sci-Fi</button>
-                <button class="question-btn question-three-btn">Short</button>
-                <button class="question-btn question-three-btn">Sports</button>
                 <button class="question-btn question-three-btn">Talk-Show</button>
+                <button class="question-btn question-three-btn">TV Movie</button>
                 <button class="question-btn question-three-btn">Thriller</button>
                 <button class="question-btn question-three-btn">War</button>
                 <button class="question-btn question-three-btn">Western</button>
@@ -162,7 +159,7 @@
                 </div>
             </div>
             <div class="question-wrapper question-one">
-                <p>How much time do you have to watch?</span></p>
+                <p>How much time do you have <span class="nowrap">to watch?</span></p>
             </div>
             <div class="slider">
                 <input type="range" id="sliderVal" name="vol" min="30" max="150" step="15" oninput="this.nextElementSibling.value = this.value + ' minutes'">
@@ -257,7 +254,7 @@
                 <p>Do you prefer a box office hit or highly-rated, <br class="no-break" />critically  <span class="nowrap">acclaimed film?</span></p>
             </div>
             <div class="buttons buttons-alt-two">
-                <button class="question-btn question-seven-btn">Box office Hit</button>
+                <button class="question-btn question-seven-btn">Box Office Hit</button>
                 <button class="question-btn question-seven-btn">Critically Acclaimed</button>
             </div>
         </div>
@@ -342,6 +339,26 @@
             </div>
             <div class="buttons buttons-alt-search">
                 <button class="question-btn take-me-back">Nevermind, Take Me Back</button>
+            </div>
+        </div>
+    </div>
+    <!-- MOVIE NOT FOUND -->
+    <div class="container image-search movie-not-found-page">
+        <div class="overlay"></div>
+        <div class="wrapper questions">
+            <div class="progress-bar-wrapper">
+                <div class="logo logo-small-mobile">
+                    <img src="img/movie.svg" alt="Movie logo">
+                    <h1>Flick Finder</h1>
+                </div>
+            </div>
+            <div class="question-wrapper">
+                <img src="img/confused-dog.jpg" alt="Confused dog">
+                <p>We'll this is embrassing.</p>
+                <p>Sorry, we can't find your selections &mdash; but let's give this <span class="nowrap">another try.</span></p>
+            </div>
+            <div class="buttons buttons-alt-search">
+                <button class="question-btn page-not-found-btn">Take Two &mdash; Retry</button>
             </div>
         </div>
     </div>

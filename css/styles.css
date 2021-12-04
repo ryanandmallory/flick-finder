@@ -220,6 +220,7 @@ body {
   position: fixed;
   top: 45%;
   color: var(--white);
+  width: 90%;
 }
 .question-wrapper p {
   font-size: 2.5rem;
@@ -282,6 +283,8 @@ body {
   position: fixed;
   bottom: 9%;
   color: var(--white);
+  width: 90%;
+  justify-content: center;
 }
 .question-three-confirmed p, .question-four-confirmed p {
   font-size: 1.75rem;
@@ -471,6 +474,11 @@ input[type=range]:focus::-ms-fill-upper {
   background: rgba(0, 0, 0, 0.45);
   border-radius: 10px;
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.45);
+  position: absolute;
+  top: 0;
+  min-height: 100%;
+  height: 100%;
+
 }
 .navigation {
   width: 100%;
@@ -511,7 +519,7 @@ input[type=range]:focus::-ms-fill-upper {
 .progress-bar-wrapper-alt {
   align-items: center;
   justify-content: center;
-  top: 8%;
+  top: 3%;
 }
 .progress-bar-wrapper .logo img {
   width: 45px;
@@ -538,7 +546,7 @@ input[type=range]:focus::-ms-fill-upper {
   width: 95%;
   display: flex;
   position: absolute;
-  top: 20%;
+  top: 25%;
   flex-wrap: wrap;
   flex-flow: row wrap;
   height: 575px;
@@ -564,7 +572,7 @@ input[type=range]:focus::-ms-fill-upper {
   font-size: 1.35rem;
   font-weight: 400;
   margin: 25px 0 30px;
-  min-height: 65px;
+  min-height: 90px;
   width: 95%;
 }
 .movie-wrapper button {
@@ -634,7 +642,7 @@ input[type=range]:focus::-ms-fill-upper {
   margin-right: 10px;
   color: var(--white );
   font-weight: bold;
-  letter-spacing: 1px';
+  letter-spacing: 1px;
 }
 .display-episode-container-right .details-wrapper {
   width: 100%;
@@ -686,15 +694,22 @@ input[type=range]:focus::-ms-fill-upper {
   font-weight: bold;
   font-size: 2rem;
 }
+a.more-information-link {
+  text-decoration: none;
+  color: var(--white);
+}
 /* CONFIRMATION PAGE */
 .start-over-confirmation-page {
   background-color: rgba(0, 0, 0, 0.85);
   position: absolute;
   z-index: 50000;
+  height: 100%;
+  max-height: 100%;
 }
 .start-over-confirmation-page h3 {
   color: var(--white);
   font-size: 3.25rem;
+  text-align: center;
   margin-bottom: 2.5rem;
 }
 .start-over-confirmation-page button {
@@ -720,20 +735,59 @@ input[type=range]:focus::-ms-fill-upper {
   width: 60%;
 }
 .search-input-wrapper input {
-  width: 100%;
-  height: 30px;
-  padding: 15px;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 30px 25px;
   font-size: 1.15rem;
   font-family: "Lato", sans-serif;
   opacity: 0.85;
   border-radius: 10px;
+  width: 100%;
 }
 .image-search .buttons-alt-search {
   top: 77%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .image-search .buttons-alt-search button {
-  width: 400px;
+  width: 350px;
   padding: 15px 0;
+}
+/* MOVIE NOT FOUND */
+.movie-not-found-page .question-wrapper {
+  top: 24%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.movie-not-found-page .question-wrapper img {
+  width: 375px;
+  opacity: .70;
+  border-radius: 100%;
+  border: 6px solid var(--white);
+  box-shadow: 1px 1px 4px #000000, 0px 0px 5px #0d0d0d;
+}
+.movie-not-found-page .question-wrapper p:nth-child(2) {
+  font-size: 3.5rem;
+  margin-bottom: 0;
+  line-height: 1.25;
+}
+.movie-not-found-page .question-wrapper p:nth-child(3) {
+  margin-top: 0;
+  font-size: 1.55rem;
+  letter-spacing: 1px;
+}
+.movie-not-found-page .buttons-alt-search {
+  top: initial;
+  bottom: 15%;
+  justify-content: center;
+}
+.page-not-found-btn {
+  bottom: 10%;
+  width: 250px!important;
 }
 @media only screen and (max-width: 1366px) {
   .container {
@@ -769,22 +823,87 @@ input[type=range]:focus::-ms-fill-upper {
   .buttons .series, .buttons .movie {
     width: 175px;
   }
+  .question-six-page .questions .buttons-alt, .question-seven-page .questions .buttons-alt-two {
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    width: 100%;
+  }
+  .question-six-page .question-wrapper {
+    top: 35%;
+  }
+  .question-six-page .questions .buttons-alt button {
+    margin-top: 30px;
+  }
+  .question-seven-page .questions .buttons-alt-two {
+    top: 63%;
+  }
   .scrollbar {
     width: 90%;
   }
+  .display-episode-container-right p {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+  .display-episode-container-right .details-wrapper {
+    flex-direction: column;
+  }
+  .details-wrapper .details-desc {
+    width: 100%;
+  }
+  .details-wrapper .details-ratings { 
+    width: 100%;
+    padding-left: initial;
+    padding-top: 1rem;
+    border: initial;
+    flex-direction: row;
+    border-top: 2px solid var(--white);
+    height: initial;
+  }
+  .details-ratings img, .details-ratings h4 {
+    display: none;
+  }
+  .episode-back-btn {
+    font-size: 0.95rem;
+    min-width: 80%;
+  }
+  .slider {
+    width: 90%;
+  }
+  .search-input-wrapper {
+    width: 80%;
+  }
+  .movie-not-found-page .question-wrapper p:nth-child(2) {
+    font-size: 2.75rem;
+  }
+  .movie-not-found-page .question-wrapper p:nth-child(3) {
+    font-size: 1.25rem;
+  }
 }
 @media only screen and (max-width: 699px) {
+  body {
+    overflow-y: initial;
+  }
   .logo {
     flex: initial;
     flex-direction: column;
   }
+  .logo h1 {
+    font-size: 4.5rem;
+  }
   .logo img {
     margin: 0 auto 60px;
+  }
+  .nav-search, .nav-close {
+    top: -50px;
   }
   .logo-small-mobile {
     justify-content: center;
     flex-direction: row;
     height: 70px;
+  }
+  .display-results-head h2 {
+    font-size: 1.15rem;
   }
   .progress-bar-wrapper .logo-small-mobile h1 {
     font-size: 3rem;
@@ -818,9 +937,81 @@ input[type=range]:focus::-ms-fill-upper {
     width: 40px;
     height: 40px;
   }
+  .question-one-page .buttons, .question-two-page .buttons, .question-five-page .buttons{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .buttons .question-btn {
     flex-wrap: nowrap;
     width: 80% !important;
+    margin-top: 30px;
+  }
+  .buttons .question-btn:first-child {
+    margin-top: 0;
+  }
+  .movies-container {
+    flex-wrap: wrap;
+    top: 28%;
+  }
+  .movie-wrapper {
+    width: 80%;
+  }
+  .movie-wrapper h3 {
+    min-height: initial;
+  }
+  .display-episode-results {
+    height: initial;
+  }
+  .display-episode-page .progress-bar-wrapper-alt {
+    top: 7%;
+  }
+  .display-episode-container {
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    min-height: 100%;
+  }
+  .display-episode-container-left {
+    width: 80%;
+    height: 100%;
+  }
+  .display-episode-container-right {
+    width: 100%;
+  }
+  .display-episode-container-right h2 {
+    margin-top: 25px;
+  }
+  .details-desc p:last-child {
+    margin-bottom: 20px;
+  }
+  .details-wrapper .details-ratings {
+    flex-wrap: wrap;
+  }
+  .start-over-confirmation-page h3 {
+    font-size: 2.15rem;
+  }
+  .start-over-confirmation-page .btn-wrapper {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .movie-not-found-page .question-wrapper {
+    top: 30%;
+  }
+  .movie-not-found-page .question-wrapper img {
+    width: 275px;
+  }
+  .movie-not-found-page .question-wrapper p:nth-child(2) {
+    font-size: 1.75rem;
+    margin-bottom: 15px;
+  }
+  .movie-not-found-page .question-wrapper p:nth-child(3) {
+    font-size: 1.15rem;
+  }
+  .movie-not-found-page .buttons-alt-search {
+    bottom: 6%;
   }
 }
 @media only screen and (max-width: 375px) {
@@ -880,31 +1071,29 @@ input[type=range]:focus::-ms-fill-upper {
     margin-bottom: 25px;
   }
   .button .begin-btn, .buttons .question-btn { 
-    font-size: 1rem;
+    font-size: 0.80rem;
     height: 55px;
   }
   .question-btn {
     margin-top: 30px;
   }
   .scrollbar {
-    
     flex-direction: initial;
   }
   .question-three {
     top: 27%;
   }
-  .question-three p span {
+  .question-three p span:last-child {
     font-size: 1.15rem !important;
   }
   .question-three-confirmed, .question-four-confirmed {
     width: 80%;
   }
-  .scrollbar {
-    top: 43%;
-    height: 200px;
-  }
   .question-three-confirmed, .question-four-confirmed {
-    bottom: 2%;
+    bottom: 0;
+  }
+  .question-three-confirmed p, .question-four-confirmed p {
+    font-size: 1.25rem;
   }
   .question-three-confirmed button, .question-three-confirmed button:hover, .question-four-confirmed button, .question-four-confirmed button:hover {
     width: 80px;
@@ -917,8 +1106,8 @@ input[type=range]:focus::-ms-fill-upper {
     width: 80%;
     bottom: 27%;
   }
-  .question-six {
-    top: 30%;
+  .question-six-page .question-six {
+    top: 29%;
   }
   .buttons-alt {
     bottom: 30%;
@@ -936,6 +1125,34 @@ input[type=range]:focus::-ms-fill-upper {
     top: initial;
     bottom: 10%;
   }
+  .display-episode-page .progress-bar-wrapper-alt {
+    top: 18%;
+  }
+  .scrollbar {
+    top: 42%;
+    height: 40%;
+  }
+  .details-wrapper .details-ratings {
+    flex-wrap: initial;
+    flex-direction: column;
+  }
+  .details-wrapper .details-ratings p {
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .details-wrapper .details-ratings p:nth-child(even){
+    background: #1D1919;
+    width: 100%;
+  }
+  .movie-not-found-page .question-wrapper img {
+    display: none;
+  }
+  .question-six-page .buttons-alt {
+    top: 55% !important;
+  }
+  .question-six-page .questions .buttons-alt button {
+    margin-top: 20px;
+  }
 }
 @media only screen and (max-width: 320px) {
   .scrollbar {
@@ -947,5 +1164,40 @@ input[type=range]:focus::-ms-fill-upper {
   }
   .search-spinner {
     top: 21%;
+  }
+  .display-episode-page .progress-bar-wrapper-alt {
+    top: 22%;
+  }
+  .display-episode-page .movies-container {
+    height: 100%;
+    min-height: 100%
+  }
+  .movie-wrapper:last-child {
+    margin-bottom: 350px;
+  }
+  .scrollbar {
+    top: 50%;
+  }
+}
+/* iphone 6/7/8 */
+@media only screen and (device-width: 375px) and (device-height: 667px){
+  .scrollbar {
+    top: 40%;
+    height: 235px;
+  }
+  .question-three-confirmed, .question-four-confirmed {
+    bottom: 1%;
+  }
+  .question-three p span:last-child {
+    display: none;
+  }
+}
+/* iphone 6/7/8 plus */
+@media only screen and (device-width: 414px) and (device-height: 736px){
+  .question-three p span:last-child {
+    font-size: 1.15rem !important;
+  }
+  .question-three-confirmed, .question-four-confirmed {
+    bottom: 1%;
   }
 }

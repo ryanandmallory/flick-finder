@@ -16,8 +16,11 @@ const displayOutputContainer = document.querySelector('.movies-container');
 const startOverConfirmationPage = document.querySelector('.start-over-confirmation-page');
 const searchPage = document.querySelector('.search-page');
 const searchConfirmationPage = document.querySelector('.search-confirmation-page');
+const movieNotFoundPage = document.querySelector('.movie-not-found-page');
 const episodeSearchField = document.querySelector('#episode-search-feld');
 const imgPath = 'https://image.tmdb.org/t/p/w1280';
+// Determines if the slection is a movie
+let isMovie = false;
 // Temporary array 
 let tempArray = [];
 // Object data being stored based on the seven questions
@@ -36,11 +39,23 @@ const changeProgressLine = function(val){
 		line.style.width = val;
 	})
 }
-// Hides geners or category button option when series is selected
+// Hides genre or category buttons option when movie is selected
+const hideTvBtns = () => {
+	const hideBtns = document.querySelectorAll('.question-three-btn');
+	hideBtns.forEach((button) => {
+		let movieBtnsDeleted = ['Kids', 'News', 'Reality', 'Talk-Show'];
+		movieBtnsDeleted.forEach((movieBtnDeleted)=>{
+			if (button.textContent == movieBtnDeleted) {
+				button.style.display = 'none';
+			}
+		});
+	});
+}
+// Hides genre or category buttons option when series is selected
 const hideMovieBtns = () => {
 	const hideBtns = document.querySelectorAll('.question-three-btn');
 	hideBtns.forEach((button) => {
-		let tvBtnsDeleted = ['Adult', 'Biography', 'Film Noir', 'Horror', 'Music', 'Short', 'Sports', 'Thriller'];
+		let tvBtnsDeleted = ['History', 'Horror', 'Music', 'Romance', 'TV Movie' ,'Thriller'];
 		tvBtnsDeleted.forEach((tvBtnDeleted)=>{
 			if (button.textContent == tvBtnDeleted) {
 				button.style.display = 'none';
@@ -54,11 +69,12 @@ const getSeries = (values) => {
 	let discoverTvUrl;
 	// Defines modern (greater than 2010) and classic less than 2010
 	const getDate = () => {
-		if (values.genre == 'Modern'){
-			console.log(values.genre)
-			return 2010;
+		if (isMovie == true){
+			if (values.genre == 'Classic'){ return `&release_date.lte=2010`; }
+			else { return `&release_date.gte=2010`; }
 		} else {
-			return 1960;
+			if (values.genre == 'Classic'){ return `&first_air_date.lte=2010`; }
+			else { return `&first_air_date.gte=2010`; }
 		}
 	};
 	// Gets time
@@ -68,10 +84,36 @@ const getSeries = (values) => {
 	// Converts numberic count based on popularity
 	const getVoteCount = () => {
 		if (values.popular == 'Popular'){
-			return 10;
+			return 100;
 		} else {
-			return 3;
+			return 10;
 		}
+	};
+	// Gets series categories and converts them to a numeric code
+	const getMovieCategory = (categories) => {
+		let category_names = [];
+		categories.forEach((category_name) => {
+			if (category_name == 'Action'){ category_names.push(Number(28))}
+			if (category_name == 'Adventure'){ category_names.push(Number(12))}
+			if (category_name == 'Animation'){ category_names.push(Number(16))}
+			if (category_name == 'Comedy'){ category_names.push(Number(35))}
+			if (category_name == 'Crime'){ category_names.push(Number(80))}
+			if (category_name == 'Documentary'){ category_names.push(Number(99))}
+			if (category_name == 'Drama'){ category_names.push(Number(18))}
+			if (category_name == 'Family'){ category_names.push(Number(10751))}
+			if (category_name == 'Fantasy'){ category_names.push(Number(14))}
+			if (category_name == 'History'){ category_names.push(Number(36))}
+			if (category_name == 'Horror'){ category_names.push(Number(27))}
+			if (category_name == 'Music'){ category_names.push(Number(10402))}
+			if (category_name == 'Mystery'){ category_names.push(Number(9648))}
+			if (category_name == 'Romance'){ category_names.push(Number(10749))}
+			if (category_name == 'Sci-Fi'){ category_names.push(Number(878))}
+			if (category_name == 'TV Movie'){ category_names.push(Number(10770))}
+			if (category_name == 'Thriller'){ category_names.push(Number(53))}
+			if (category_name == 'War'){ category_names.push(Number(10752))}
+			if (category_name == 'Western'){ category_names.push(Number(37))}
+		});
+		return category_names;
 	};
 	// Gets series categories and converts them to a numeric code
 	const getTVCategory = (categories) => {
@@ -98,7 +140,7 @@ const getSeries = (values) => {
 		});
 		return category_names;
 	};
-	// Excludes generes based on audience selection
+	// Excludes generes based on audience selection when series is selected
 	const getExcludedTVCategory = () => {
 		let excluded_category_names = [];
 		if (values.audience == 'Kids'){
@@ -129,6 +171,33 @@ const getSeries = (values) => {
 		}
 		return excluded_category_names;
 	}
+	const getAdult = () => {
+		if (values.audience == 'Adults'){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	const getBoxOfficeHit = () => {
+		if (values.hit == 'Box Office Hit'){
+			return `&sort_by=revenue.desc`;
+		} else {
+			return `&sort_by=vote_average.desc&sort_by=popularity.desc`;
+		}
+	}
+	// Excludes generes based on audience selection when movie is selected
+	const getExcludedMovieCategory = () => {
+		let excluded_category_names = [];
+		if (values.audience == 'Kids'){
+			excluded_category_names.push(80);
+			excluded_category_names.push(27);
+			excluded_category_names.push(10749);
+			excluded_category_names.push(10752);
+		}else {
+			return 0;
+		}
+		return excluded_category_names;
+	}
 	// Returns results if critically acclaimed or screen theatrically
 	const getScreenedTheatrically = () => {
 		if (values.hit == 'Critically Acclaimed'){
@@ -145,8 +214,12 @@ const getSeries = (values) => {
 		if (data.results === undefined || data.results.length == 0 ) {
 			const tempArray = values.category;
 			const tempArrayReduce = tempArray.splice(0, 2);
-			discoverTvUrl = `https://api.themoviedb.org/3/discover/tv?api_key=4b04125b76f09355bc6be4f9e740d5fd&language=en-US&timezone=America%2FNew_York&with_genres=${getTVCategory(tempArrayReduce)}&sort_by=popularity.desc&page=1}`;
-			createShowBoardAlt(discoverTvUrl);
+			if (isMovie == true){
+				movieNotFoundAlert();
+			} else {
+				discoverTvUrl = `https://api.themoviedb.org/3/discover/tv?api_key=4b04125b76f09355bc6be4f9e740d5fd&language=en-US&timezone=America%2FNew_York&with_genres=${getTVCategory(tempArrayReduce)}&sort_by=popularity.desc&page=1}`;
+				createShowBoardAlt(discoverTvUrl);
+			}
 		}
 	}
 	// Fetches url based on reduce parameters
@@ -157,7 +230,79 @@ const getSeries = (values) => {
 	}
 	// Displays Movie or epsiodes based on data results
 	const showMoviesEpsiodes = (movies) => {
+		if (isMovie == true) {
+			movies.forEach((movie) => {
+				const { original_title, poster_path, id } = movie;
+				const movieEl = document.createElement('div');
+				movieEl.classList.add('movie-wrapper');
+				movieEl.innerHTML = `
+					<img src="${runImageChecker(imgPath, poster_path)}" alt="${original_title}">
+					<h3>${original_title}</h3>
+					<button class="movie-btn" href="#" data-id="${id}">More</button>
+			`;
+			displayOutputContainer.appendChild(movieEl);
+		});
+		} else {
+			movies.forEach((movie) => {
+				const { name, poster_path, id } = movie;
+				const movieEl = document.createElement('div');
+				movieEl.classList.add('movie-wrapper');
+				movieEl.innerHTML = `
+					<img src="${runImageChecker(imgPath, poster_path)}" alt="${name}">
+					<h3>${name}</h3>
+					<button class="episode-btn" href="#" data-id="${id}">More</button>
+			`;
+			displayOutputContainer.appendChild(movieEl);
+			});
+		}
+	}
+	// Returns movie or series depending on which button is clicked
+	if (values.type == 'Movie'){
+		discoverMovieUrl = `https://api.themoviedb.org/3/discover/movie?api_key=4b04125b76f09355bc6be4f9e740d5fd&page=1&language=en-US&timezone=America%2FNew_York&certification_country=US&with_genres=${getMovieCategory(values.category)}&with_runtime.lte=${getRuntime()}${getDate()}&vote_count.gte=${getVoteCount()}&without_genres=${getExcludedMovieCategory()}&vote_average.gte=6&include_adult=${getAdult()}${getBoxOfficeHit()}&page=1}`;
+		createShowBoard(discoverMovieUrl);
+	} else {
+		discoverTvUrl = `https://api.themoviedb.org/3/discover/tv?api_key=4b04125b76f09355bc6be4f9e740d5fd&language=en-US&timezone=America%2FNew_York&with_genres=${getTVCategory(values.category)}&with_runtime.lte=${getRuntime()}${getDate()}&vote_count.gte=${getVoteCount()}&without_genres=${getExcludedTVCategory()}&screened_theatrically=${getScreenedTheatrically()}&sort_by=popularity.desc&page=1}`;
+		createShowBoard(discoverTvUrl);
+	}
+}
+// Fetches specific episode results
+const fetchEpisodeResults = async (movieId) => {
+	const res = await fetch('https://api.themoviedb.org/3/tv/' + movieId + '?api_key=4b04125b76f09355bc6be4f9e740d5fd');
+	const data = await res.json();
+	createEpisodeDisplay(data);
+}
+// Fetches specific movie results
+const fetchMovieResults = async (movieId) => {
+	const res = await fetch('https://api.themoviedb.org/3/movie/' + movieId + '?api_key=4b04125b76f09355bc6be4f9e740d5fd');
+	const data = await res.json();
+	createEpisodeDisplay(data);
+}
+// Creates overview of the episodes series display
+const fetchEpisodeSeriesSearch = async (movieId) => {
+	if (isMovie == true){
+		const res = await fetch('https://api.themoviedb.org/3/search/movie?api_key=4b04125b76f09355bc6be4f9e740d5fd&query=' + movieId + '&language=en-US&page=1&include_adult=false');
+		const data = await res.json();
+		displayOutputContainer.innerHTML = '';
+		let movies = data.results;
 		movies.forEach((movie) => {
+			const { original_title, poster_path, id } = movie;
+			const movieEl = document.createElement('div');
+			movieEl.classList.add('movie-wrapper');
+			movieEl.innerHTML = `
+				<img src="${runImageChecker(imgPath, poster_path)}" alt="${original_title}">
+				<h3>${original_title}</h3>
+				<button class="movie-btn" href="#" data-id="${id}">More</button>
+		`;
+		displayOutputContainer.appendChild(movieEl);
+		});
+		searchPage.classList.remove('active');
+		displayEpisodePage.classList.add('active');
+	} else {
+		const res = await fetch('https://api.themoviedb.org/3/search/tv?api_key=4b04125b76f09355bc6be4f9e740d5fd&query=' + movieId + '&language=en-US&page=1&include_adult=false');
+		const data = await res.json();
+		displayOutputContainer.innerHTML = '';
+		let seriesEl = data.results;
+		seriesEl.forEach((movie) => {
 			const { name, poster_path, id } = movie;
 			const movieEl = document.createElement('div');
 			movieEl.classList.add('movie-wrapper');
@@ -167,80 +312,80 @@ const getSeries = (values) => {
 				<button class="episode-btn" href="#" data-id="${id}">More</button>
 		`;
 		displayOutputContainer.appendChild(movieEl);
-    	});
+		});
+		searchPage.classList.remove('active');
+		displayEpisodePage.classList.add('active');
 	}
-	// Returns movie or series depending on which button is clicked
-	if (values.type == 'Movie'){
-		discoverMovieUrl = `https://api.themoviedb.org/3/discover/movie/?sort_by=popularity.desc&api_key=4b04125b76f09355bc6be4f9e740d5fd&page=1`;
-		console.log("Movies");
-	} else {
-		discoverTvUrl = `https://api.themoviedb.org/3/discover/tv?api_key=4b04125b76f09355bc6be4f9e740d5fd&language=en-US&timezone=America%2FNew_York&with_genres=${getTVCategory(values.category)}&with_runtime.lte=${getRuntime()}&first_air_date.gte=${getDate()}&vote_count.gte=${getVoteCount()}&without_genres=${getExcludedTVCategory()}&screened_theatrically=${getScreenedTheatrically()}&sort_by=popularity.desc&page=1}`;
-		createShowBoard(discoverTvUrl);
-		console.log(discoverTvUrl);
-	}
-}
-// Fetches specific episode results through fetch
-const fetchEpisodeResults = async (movieId) => {
-	const res = await fetch('https://api.themoviedb.org/3/tv/' + movieId + '?api_key=4b04125b76f09355bc6be4f9e740d5fd');
-	const data = await res.json();
-	console.log(data)
-	createEpisodeDisplay(data);
-}
-// Creates overview of the episodes series display
-const fetchEpisodeSeriesSearch = async (movieId) => {
-	const res = await fetch('https://api.themoviedb.org/3/search/tv?api_key=4b04125b76f09355bc6be4f9e740d5fd&query=' + movieId + '&language=en-US&page=1&include_adult=false');
-	const data = await res.json();
-	displayOutputContainer.innerHTML = '';
-	let seriesEl = data.results;
-	seriesEl.forEach((movie) => {
-		const { name, poster_path, id } = movie;
-		const movieEl = document.createElement('div');
-		movieEl.classList.add('movie-wrapper');
-		movieEl.innerHTML = `
-			<img src="${runImageChecker(imgPath, poster_path)}" alt="${name}">
-			<h3>${name}</h3>
-			<button class="episode-btn" href="#" data-id="${id}">More</button>
-	`;
-	displayOutputContainer.appendChild(movieEl);
-	});
-	searchPage.classList.remove('active');
-	displayEpisodePage.classList.add('active');
 }
 // Creates expanded view of the episode series page
 const createEpisodeDisplay = (episodeDataResults) => {
-		const { name, poster_path, overview, genres, first_air_date, created_by, number_of_seasons, number_of_episodes, networks, episode_run_time, popularity, vote_count, vote_average} = episodeDataResults;
-		const epsoideEl = document.createElement('div');
-		epsoideEl.classList.add('display-episode-container');
-		epsoideEl.innerHTML = `
-		<div class="display-episode-container-left">
-			<img src="${runImageChecker(imgPath, poster_path)}" alt="${name}">
-			<button class="episode-back-btn">Back to selections</button>
-		</div>
-		<div class="display-episode-container-right">
-			<h2 class="lead-headline">${name}</h2>
-			<p class="lead-desc">${overview}</p>
-			<div class="details-wrapper">
-				<div class="details-desc">
-					<p><strong>Type:</strong> TV Series</p>
-					<p><strong>Genre:</strong> ${loopArray(genres)}</p>
-					<p><strong>Release date:</strong> ${first_air_date}</p>
-					<p><strong>Created by:</strong> ${loopArray(created_by)}</p>
-					<p><strong>Number of seasons:</strong> ${number_of_seasons}</p>
-					<p><strong>Number of episodes:</strong> ${number_of_episodes}</p>
-					<p><strong>Networks:</strong> ${loopArray(networks)}</p>
-					<p><strong>Length:</strong> ${loopArrayAlt(episode_run_time)}</p>
-				</div>
-				<div class="details-ratings">
-					<img src="img/star.svg" alt="Star icon">
-					<h4>Episode Ratings</h4>
-					<p>Popularity<strong>${roundsFigure(popularity)}</strong></p>
-					<p>Vote Count<strong>${vote_count}</strong></p>
-					<p>Vote Average<strong>${vote_average}</strong></p>
+		if (isMovie == true){
+			const { original_title, poster_path, overview, genres, release_date, runtime, revenue, homepage, popularity, vote_count, vote_average} = episodeDataResults;
+			const epsoideEl = document.createElement('div');
+			epsoideEl.classList.add('display-episode-container');
+			epsoideEl.innerHTML = `
+			<div class="display-episode-container-left">
+				<img src="${runImageChecker(imgPath, poster_path)}" alt="${original_title}">
+				<button class="episode-back-btn">Back to selections</button>
+			</div>
+			<div class="display-episode-container-right">
+				<h2 class="lead-headline">${original_title}</h2>
+				<p class="lead-desc">${overview}</p>
+				<div class="details-wrapper">
+					<div class="details-desc">
+						<p><strong>Type:</strong> Movie</p>
+						<p><strong>Genre:</strong> ${loopArray(genres)}</p>
+						<p><strong>Release date:</strong> ${release_date}</p>
+						<p><strong>Length:</strong> ${runtime} mins.</p>
+						<p><strong>Revenue:</strong> $${numberWithCommas(revenue)}</p>
+						${checkHomepage(homepage)}
+					</div>
+					<div class="details-ratings">
+						<img src="img/star.svg" alt="Star icon">
+						<h4>Episode Ratings</h4>
+						<p>Popularity<strong>${roundsFigure(popularity)}</strong></p>
+						<p>Vote Count<strong>${vote_count}</strong></p>
+						<p>Vote Average<strong>${vote_average}</strong></p>
+					</div>
 				</div>
 			</div>
-		</div>
-	`;
-	displayEpisodeResults.appendChild(epsoideEl);
+			`;
+			displayEpisodeResults.appendChild(epsoideEl);
+		} else {
+			const { name, poster_path, overview, genres, first_air_date, created_by, number_of_seasons, number_of_episodes, networks, episode_run_time, popularity, vote_count, vote_average} = episodeDataResults;
+			const epsoideEl = document.createElement('div');
+			epsoideEl.classList.add('display-episode-container');
+			epsoideEl.innerHTML = `
+			<div class="display-episode-container-left">
+				<img src="${runImageChecker(imgPath, poster_path)}" alt="${name}">
+				<button class="episode-back-btn">Back to selections</button>
+			</div>
+			<div class="display-episode-container-right">
+				<h2 class="lead-headline">${name}</h2>
+				<p class="lead-desc">${overview}</p>
+				<div class="details-wrapper">
+					<div class="details-desc">
+						<p><strong>Type:</strong> TV Series</p>
+						<p><strong>Genre:</strong> ${loopArray(genres)}</p>
+						<p><strong>Release date:</strong> ${first_air_date}</p>
+						<p><strong>Created by:</strong> ${loopArray(created_by)}</p>
+						<p><strong>Number of seasons:</strong> ${number_of_seasons}</p>
+						<p><strong>Number of episodes:</strong> ${number_of_episodes}</p>
+						<p><strong>Networks:</strong> ${loopArray(networks)}</p>
+						<p><strong>Length:</strong> ${loopArrayAlt(episode_run_time)}</p>
+					</div>
+					<div class="details-ratings">
+						<img src="img/star.svg" alt="Star icon">
+						<h4>Episode Ratings</h4>
+						<p>Popularity<strong>${roundsFigure(popularity)}</strong></p>
+						<p>Vote Count<strong>${vote_count}</strong></p>
+						<p>Vote Average<strong>${vote_average}</strong></p>
+					</div>
+				</div>
+			</div>
+			`;
+			displayEpisodeResults.appendChild(epsoideEl);
+		}
 }
 // Returns a generic images if the image cannot be found
 const runImageChecker = (path, image) =>{
@@ -254,7 +399,6 @@ const runImageChecker = (path, image) =>{
 // Returns Not Available for information that cannot be found 
 const loopArray = (elements)=> {
 	let elementArray = [];
-	console.log(elements)
 	if (elements.length == 0){
 		return 'Not available';
 	}
@@ -276,6 +420,25 @@ const loopArrayAlt = (elements)=> {
 const roundsFigure = (num) => {
 	return Math.round(num);
 }
+// Adds commas to dollar figures
+const numberWithCommas = (x)=> {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+// Check to see if their is a homepage URL
+const checkHomepage = (url) => {
+	if (url == "" || url == undefined){ return `<p><strong>More information:</strong> Website URL not available.</p>` } 
+	else {
+		return `<p><strong>More information:</strong> <a href="${url}" class="more-information-link" target="_blank">Click <span style="text-decoration: underline">here</span> to external website</a></p>`
+	}
+}
+//
+const movieNotFoundAlert = () => {
+	setTimeout( ()=> {
+		displayEpisodePage.classList.remove('active');
+		movieNotFoundPage.classList.add('fade-out');
+		movieNotFoundPage.classList.add('active');
+	}, 7001);
+}
 
 // EVENT LISTENERS
 // Keystroke or enter Event Listeners
@@ -296,6 +459,7 @@ document.addEventListener('click', function (event) {
 		questions.type = [event.target.textContent];
         questionTwoPage.classList.add('active');
 		if (event.target.textContent == 'Series'){ hideMovieBtns(); }
+		if (event.target.textContent == 'Movie'){ hideTvBtns(); isMovie = true }
 		changeProgressLine('20%');
 	}
 	if (event.target.matches('.question-two-btn')) {
@@ -306,6 +470,7 @@ document.addEventListener('click', function (event) {
 	}
 	if (event.target.matches('.question-three-btn')) {
 		let flag = false;
+		let flagHorrorMovie = false;
 		let category = event.target.textContent;
 		const checkDuplicate = function (value, array) {
 			for (let i = 0; i < tempArray.length; i++) {
@@ -314,7 +479,19 @@ document.addEventListener('click', function (event) {
 					const removeId = tempArray.splice(id, 1);
 					event.target.setAttribute('style', 'background: #fcf3f3 !important; color: #1D1919 !important;');
 					flag = true;
-				} 
+				}
+			}
+		}
+		if (category == 'Horror'){
+			const disableBtn = document.querySelector('.question-six-btn');
+			if (flagHorrorMovie == false){
+				disableBtn.style.opacity = '0.35';
+				disableBtn.disabled = true;
+				flagHorrorMovie = true;
+			} else {
+				disableBtn.style.opacity = '1';
+				disableBtn.disabled = false;
+				flagHorrorMovie = false;
 			}
 		}
 		if (tempArray === undefined || tempArray.length == 0) {
@@ -397,6 +574,11 @@ document.addEventListener('click', function (event) {
 		displayEpisodePage.classList.remove('active');
 		displayEpisodeResults.classList.add('active');
 	}
+	if (event.target.matches('.movie-btn')) {
+		fetchMovieResults(event.target.dataset.id);
+		displayEpisodePage.classList.remove('active');
+		displayEpisodeResults.classList.add('active');
+	}
 	if (event.target.matches('.episode-back-btn')) {
 		displayEpisodeResults.classList.remove('active');
 		displayEpisodeResults.innerHTML = '';
@@ -428,5 +610,8 @@ document.addEventListener('click', function (event) {
 	if (event.target.matches('.take-me-back')) {
 		searchPage.classList.remove('active');
 		displayEpisodePage.classList.add('active');
+	}
+	if (event.target.matches('.page-not-found-btn')) {
+		window.location.reload();
 	}
 }, false);
