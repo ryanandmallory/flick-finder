@@ -1201,3 +1201,108 @@ a.more-information-link {
     bottom: 1%;
   }
 }
+/* iPad and iPad Pro */
+@media only screen and (device-width: 1024px) and (device-height: 1366px){
+  .progress-bar-wrapper {
+    top: 3.5%;
+  }
+  .question-one-page .question-wrapper, .question-two-page .question-wrapper, .question-four-page .question-wrapper, .question-five-page .question-wrapper, .question-six-page .question-wrapper, .question-seven-page .question-wrapper {
+    top: 40%;
+  }
+  .question-one-page .buttons, .question-two-page .buttons, .question-five-page .buttons, .question-seven-page .buttons {
+    top: 52%;
+  }
+  .question-three {
+    top: 36%;
+  }
+  .question-six-page .questions .buttons-alt, .question-seven-page .questions .buttons-alt-two {
+    flex-direction: row;
+    align-items: center;
+    top: 28%;
+    width: 90%;
+  }
+  .question-seven-page .questions .buttons-alt-two {
+    width: 75%;
+    top: 32%;
+  }
+  .buttons-alt-search {
+    top: 68% !important;
+  }
+  .slider {
+    bottom: 28% !important;
+  }
+}
+/* Nest Hub */
+@media only screen and (device-width: 1024px) and (device-height: 600px){
+  .half-circle {
+    top: -35px;
+  }
+  .questions .logo {
+    margin-top: initial;
+  }
+  .question-wrapper p {
+    font-size: 1.75rem!important;
+  }
+  .wrapper .scrollbar {
+    top: 45%;
+  }
+  .progress-bar {
+    margin-top: 0;
+  }
+  .wrapper .question-three {
+    top: 30%;
+  }
+  .wrapper .question-three span {
+    display: none;
+  }
+  .wrapper .question-three-confirmed, .wrapper .question-four-confirmed {
+    bottom: 0;
+  }
+  .wrapper .slider {
+    bottom: 25%;
+  }
+  .question-six-page .question-wrapper, .question-seven-page .question-wrapper {
+    top: 40%;
+  }
+  .question-six-page .questions .buttons-alt {
+    flex-direction: row;
+    align-items: center;
+    top: 42%;
+    width: 90%;
+  }
+  .question-seven-page .questions .buttons-alt-two {
+    flex-direction: row;
+    align-items: center;
+    top: 50%;
+    width: 75%;
+  }
+  .display-episode-page .movies-container {
+    top: 22%;
+  }
+  .display-episode-container {
+    padding: 10% 5%;
+  }
+  .display-episode-container-left {
+    width: 25%;
+  }
+  .display-episode-container-right {
+    width: 75%;
+  }
+  .details-wrapper {
+    margin-top: initial;
+  }
+  .display-episode-container-right p {
+    font-size: 0.8rem;
+  }
+  .details-wrapper .details-ratings {
+    border: 0;
+    padding-top: 0;
+  }
+  .movies-container {
+    height: 400px;
+    min-height: 400px;
+  }
+  .search-input-wrapper {
+    top: 56%; 
+  }
+}
